@@ -1,9 +1,13 @@
 package com.cdac.wandermate.controllers;
 
 import com.cdac.wandermate.dto.CreateUserDto;
+import com.cdac.wandermate.dto.LoginRequestDto;
 import com.cdac.wandermate.dto.UserDto;
 import com.cdac.wandermate.services.AuthService;
 import com.cdac.wandermate.utils.ApiResponse;
+
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,4 +35,19 @@ public class AuthController {
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+    
+    @PostMapping("/login")
+    public ResponseEntity<ApiResponse<UserDto>> loginUser(@RequestBody LoginRequestDto credentials){
+        UserDto user = authService.Login(credentials);
+
+        ApiResponse<UserDto> response = new ApiResponse<>(
+                200,
+                user,
+                "User LoggedIn successfully.",
+                true
+        );
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+ 
 }
