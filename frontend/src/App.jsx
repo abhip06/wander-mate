@@ -1,14 +1,11 @@
-
+import Login from "./Login";
 
 function App() {
-
   return (
-    <>
-      <div className="h-screen flex justify-center items-center">
-        <h1 className="text-7xl font-bold">Wander Mate</h1>
-      </div>
-    </>
-  )
+    <div>
+      <Login />
+    </div>
+  );
 }
 
-export default App
+export default App;
