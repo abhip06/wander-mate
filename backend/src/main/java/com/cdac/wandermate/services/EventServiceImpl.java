@@ -10,11 +10,13 @@ import com.cdac.wandermate.repositories.EventRepository;
 import com.cdac.wandermate.repositories.UserRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+@Service
 public class EventServiceImpl implements EventService{
     private final UserRepository userRepository;
     private final EventRepository eventRepository;
