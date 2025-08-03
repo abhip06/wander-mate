@@ -36,7 +36,7 @@ public class EventController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<ApiResponse<EventResponseDto>> createEvent(@RequestBody AddEventDto eventData){
+    public ResponseEntity<ApiResponse<EventResponseDto>> createEvent(@PathVariable AddEventDto eventData){
         EventResponseDto event = eventService.create(eventData);
 
         ApiResponse<EventResponseDto> response = new ApiResponse<>(
@@ -50,7 +50,7 @@ public class EventController {
     }
 
     @PatchMapping("/edit/{id}")
-    public ResponseEntity<ApiResponse<EventResponseDto>> editEvent(@RequestParam  UUID eventId, @RequestBody EditEventDto eventData){
+    public ResponseEntity<ApiResponse<EventResponseDto>> editEvent(@PathVariable("id")  UUID eventId, @RequestBody EditEventDto eventData){
         EventResponseDto event = eventService.edit(eventId, eventData);
 
         ApiResponse<EventResponseDto> response = new ApiResponse<>(
@@ -64,13 +64,27 @@ public class EventController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<ApiResponse<EventResponseDto>> deleteEvent(@RequestParam UUID eventId){
+    public ResponseEntity<ApiResponse<EventResponseDto>> deleteEvent(@PathVariable("id") UUID eventId){
         eventService.delete(eventId);
 
         ApiResponse<EventResponseDto> response = new ApiResponse<>(
                 200,
                 null,
                 "Event deleted successfully.",
+                true
+        );
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+    
+    @GetMapping("/{id}")
+    public ResponseEntity<ApiResponse<EventResponseDto>> eventInfo(@PathVariable("id") UUID eventId){
+        EventResponseDto event = eventService.info(eventId);
+
+        ApiResponse<EventResponseDto> response = new ApiResponse<>(
+                200,
+                event,
+                "Event info fetched successfully.",
                 true
         );
 
