@@ -5,8 +5,8 @@ import com.cdac.wandermate.dto.EditEventDto;
 import com.cdac.wandermate.dto.EventResponseDto;
 import com.cdac.wandermate.services.EventService;
 import com.cdac.wandermate.utils.ApiResponse;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -49,7 +49,7 @@ public class EventController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @PatchMapping("/edit")
+    @PatchMapping("/edit/{id}")
     public ResponseEntity<ApiResponse<EventResponseDto>> editEvent(@RequestParam  UUID eventId, @RequestBody EditEventDto eventData){
         EventResponseDto event = eventService.edit(eventId, eventData);
 
@@ -63,7 +63,7 @@ public class EventController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @DeleteMapping("/delete")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<ApiResponse<EventResponseDto>> deleteEvent(@RequestParam UUID eventId){
         eventService.delete(eventId);
 
