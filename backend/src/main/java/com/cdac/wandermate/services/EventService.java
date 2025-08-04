@@ -12,4 +12,5 @@ public interface EventService {
     EventResponseDto edit(UUID eventId, EditEventDto eventData);
     Boolean delete(UUID eventId);
     List<EventResponseDto> allEvents();
+    EventResponseDto info(UUID eventId);
 }

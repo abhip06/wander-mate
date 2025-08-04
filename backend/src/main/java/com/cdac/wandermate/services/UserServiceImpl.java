@@ -47,6 +47,7 @@ public class UserServiceImpl implements UserService{
         UserDto userDto = new UserDto();
 
         BeanUtils.copyProperties(user, userDto);
+        userDto.setPassword(null);
 
         return userDto;
     }
@@ -68,6 +69,7 @@ public class UserServiceImpl implements UserService{
         UserDto userDto = new UserDto();
 
         BeanUtils.copyProperties(updatedUser, userDto);
+        userDto.setPassword(null);
 
         return userDto;
     }

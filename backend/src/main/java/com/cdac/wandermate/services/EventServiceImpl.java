@@ -114,4 +114,17 @@ public class EventServiceImpl implements EventService{
         }
         return eventsDto;
     }
+
+    // Get Event Info
+	@Override
+	public EventResponseDto info(UUID eventId) {
+		Event event = eventRepository.findById(eventId)
+				.orElseThrow(() -> new ResourceNotFoundException("No event found with Id: " + eventId));
+		
+		EventResponseDto eventDto = new EventResponseDto();
+		
+		BeanUtils.copyProperties(event, eventDto);
+		
+		return eventDto;
+	}
 }

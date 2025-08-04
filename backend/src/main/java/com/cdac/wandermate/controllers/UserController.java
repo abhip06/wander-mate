@@ -33,7 +33,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ApiResponse<UserDto>> getUserData(@RequestParam UUID userId){
+    public ResponseEntity<ApiResponse<UserDto>> getUserData(@PathVariable("id") UUID userId){
         UserDto user = userService.getUser(userId);
 
         ApiResponse<UserDto> response = new ApiResponse<>(
@@ -47,7 +47,7 @@ public class UserController {
     }
 
     @PatchMapping("/edit/{id}")
-    public ResponseEntity<ApiResponse<UserDto>> editUserData(@RequestParam UUID userId, @RequestBody EditUserDto userData){
+    public ResponseEntity<ApiResponse<UserDto>> editUserData(@PathVariable("id") UUID userId, @RequestBody EditUserDto userData){
         UserDto user = userService.editUser(userId, userData);
 
         ApiResponse<UserDto> response = new ApiResponse<>(
@@ -61,7 +61,7 @@ public class UserController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<ApiResponse<UserDto>> deleteUser(@RequestParam UUID userId){
+    public ResponseEntity<ApiResponse<UserDto>> deleteUser(@PathVariable("id") UUID userId){
         boolean isSuccess = userService.delete(userId);
 
         ApiResponse<UserDto> response = new ApiResponse<>(
