@@ -1,0 +1,89 @@
+package com.cdac.wandermate.dto;
+
+import com.cdac.wandermate.domains.EventTags;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+
+import java.time.LocalDate;
+
+public class AddEventDto {
+    @NotNull(message = "Event name is required")
+    private String eventName;
+
+    @NotNull(message = "description is required")
+    @Size(max = 255, message = "Description size not exceed 255.")
+    private String description;
+
+    @NotNull(message = "Start date is required")
+    private LocalDate startDate;
+
+    @NotNull(message = "End date is required")
+    private LocalDate endDate;
+
+    @NotNull(message = "Trip tag is required")
+    private EventTags tag;
+
+    @NotNull(message = "Destination is required")
+    private String destination;
+
+    public AddEventDto(){
+
+    }
+
+    public AddEventDto(String eventName, String description, LocalDate startDate, LocalDate endDate, EventTags tag, String destination) {
+        this.eventName = eventName;
+        this.description = description;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.tag = tag;
+        this.destination = destination;
+    }
+
+    public String getEventName() {
+        return eventName;
+    }
+
+    public void setEventName(String eventName) {
+        this.eventName = eventName;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public LocalDate getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
+    }
+
+    public LocalDate getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(LocalDate endDate) {
+        this.endDate = endDate;
+    }
+
+    public EventTags getTag() {
+        return tag;
+    }
+
+    public void setTag(EventTags tag) {
+        this.tag = tag;
+    }
+
+    public String getDestination() {
+        return destination;
+    }
+
+    public void setDestination(String destination) {
+        this.destination = destination;
+    }
+}

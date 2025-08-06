@@ -41,8 +41,18 @@ const App = () => {
     setLoggedInUser(null);
   };
 
-  const hideHeaderRoutes = ["/", "/login", "/signup"];
-  const shouldShowHeader = !hideHeaderRoutes.includes(location.pathname);
+ const hideHeaderRoutes = ["/", "/login", "/signup"];
+ const shouldShowHeader = !hideHeaderRoutes.includes(location.pathname);
+
+import LandingPage from "./pages/LandingPage";
+import CreateEvent from "./components/EventForm";
+import Profile from "./components/ProfileCard";
+// import Login from "./pages/Login";
+import Signup from "./components/Registration";
+import Search from "./pages/Search";
+import EventDetails from "./pages/EventDetails";
+
+const App = () => {
 
   return (
     <>
@@ -85,9 +95,9 @@ const App = () => {
   }
 />
 
-        <Route path="/events" element={<EventsPage />} />
-        <Route path="/search" element={<SearchPage />} />
-
+        <Route path="/search" element={<Search />} />
+        <Route path="/event/:id" element={<EventDetails />} />
+          
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </>

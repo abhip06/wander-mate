@@ -9,5 +9,4 @@ public class WanderMateApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(WanderMateApplication.class, args);
 	}
-
 }

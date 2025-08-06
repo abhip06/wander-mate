@@ -1,16 +1,28 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+  
 import axios from "axios";
 import Navbar from "../components/Navbar";
+
 const LandingPage = () => {
+  const [location, setLocation] = useState("");
+  const [date, setDate] = useState("");
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
+  const handleSearch = () => {
+    if (!location || !date) return alert("Please enter location and date");
+
+    // Redirect with query parameters
+    navigate(`/search?location=${encodeURIComponent(location)}&date=${date}`);
+  };
+  
   // Fetch events from backend
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const res = await axios.get("http://localhost:8080/api/v1/events");
+        const res = await axios.get("http://localhost:5000/api/v1/events");
         setEvents(res.data.data); // Assuming response = { code, data, message, success }
       } catch (error) {
         console.error("Error fetching events:", error.message);
@@ -47,6 +59,28 @@ const LandingPage = () => {
         <h3 className="text-2xl font-bold text-center text-blue-600 mb-10">
           Upcoming Events
         </h3>
+      {/* Search Bar */}
+      <div className="flex justify-center py-6">
+        <input
+          type="text"
+          placeholder="Enter Location"
+          value={location}
+          onChange={(e) => setLocation(e.target.value)}
+          className="w-48 px-4 py-2 border rounded-l-md focus:outline-none"
+        />
+        <input
+          type="date"
+          value={date}
+          onChange={(e) => setDate(e.target.value)}
+          className="w-48 px-4 py-2 border focus:outline-none"
+        />
+        <button
+          className="bg-blue-600 text-white px-4 py-2 rounded-r-md hover:bg-blue-700"
+          onClick={handleSearch}
+        >
+          Search
+        </button>
+      </div>
 
         {loading ? (
           <p className="text-center text-gray-500">Loading events...</p>
