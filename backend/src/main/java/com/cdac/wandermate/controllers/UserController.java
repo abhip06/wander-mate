@@ -18,20 +18,6 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    @GetMapping("")
-    public ResponseEntity<ApiResponse<List<UserDto>>> getAllUsers(){
-        List<UserDto> users = userService.allUsers();
-
-        ApiResponse<List<UserDto>> response = new ApiResponse<>(
-                200,
-                users,
-                "All users fetched successfully.",
-                true
-        );
-
-        return new ResponseEntity<>(response, HttpStatus.OK);
-    }
-
     @GetMapping("/{id}")
     public ResponseEntity<ApiResponse<UserDto>> getUserData(@PathVariable("id") UUID userId){
         UserDto user = userService.getUser(userId);
@@ -58,19 +44,5 @@ public class UserController {
         );
 
         return new ResponseEntity<>(response, HttpStatus.OK);
-    }
-
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<ApiResponse<UserDto>> deleteUser(@PathVariable("id") UUID userId){
-        boolean isSuccess = userService.delete(userId);
-
-        ApiResponse<UserDto> response = new ApiResponse<>(
-                200,
-                null,
-                "User deleted successfully.",
-                isSuccess
-        );
-
-        return  new ResponseEntity<>(response, HttpStatus.OK);
     }
 }
