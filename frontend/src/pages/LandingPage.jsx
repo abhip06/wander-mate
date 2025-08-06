@@ -1,7 +1,17 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 const LandingPage = () => {
+  const [location, setLocation] = useState("");
+  const [date, setDate] = useState("");
+  const navigate = useNavigate();
+
+  const handleSearch = () => {
+    if (!location || !date) return alert("Please enter location and date");
+
+    // Redirect with query parameters
+    navigate(`/search?location=${encodeURIComponent(location)}&date=${date}`);
+  };
   return (
     <div className="min-h-screen bg-gray-100">
       {/* Navbar */}
@@ -40,10 +50,23 @@ const LandingPage = () => {
       <div className="flex justify-center py-6">
         <input
           type="text"
-          placeholder="Search for events..."
-          className="w-1/2 px-4 py-2 border rounded-l-md focus:outline-none"
+          placeholder="Enter Location"
+          value={location}
+          onChange={(e) => setLocation(e.target.value)}
+          className="w-48 px-4 py-2 border rounded-l-md focus:outline-none"
         />
-        <button className="bg-blue-600 text-white px-4 py-2 rounded-r-md hover:bg-blue-700">Search</button>
+        <input
+          type="date"
+          value={date}
+          onChange={(e) => setDate(e.target.value)}
+          className="w-48 px-4 py-2 border focus:outline-none"
+        />
+        <button
+          className="bg-blue-600 text-white px-4 py-2 rounded-r-md hover:bg-blue-700"
+          onClick={handleSearch}
+        >
+          Search
+        </button>
       </div>
 
       {/* Services */}
