@@ -36,7 +36,7 @@ public class EventController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<ApiResponse<EventResponseDto>> createEvent(@PathVariable AddEventDto eventData){
+    public ResponseEntity<ApiResponse<EventResponseDto>> createEvent(@RequestBody AddEventDto eventData){
         EventResponseDto event = eventService.create(eventData);
 
         ApiResponse<EventResponseDto> response = new ApiResponse<>(

@@ -1,13 +1,15 @@
 package com.cdac.wandermate.services;
 
+import com.cdac.wandermate.domains.EventStatus;
 import com.cdac.wandermate.dto.AddEventDto;
 import com.cdac.wandermate.dto.EditEventDto;
 import com.cdac.wandermate.dto.EventResponseDto;
+import com.cdac.wandermate.dto.UserDto;
 import com.cdac.wandermate.entities.Event;
 import com.cdac.wandermate.entities.User;
 import com.cdac.wandermate.exceptions.ResourceNotFoundException;
 import com.cdac.wandermate.repositories.EventRepository;
-import com.cdac.wandermate.repositories.UserRepository;
+import com.cdac.wandermate.utils.CurrentUserUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
@@ -18,20 +20,20 @@ import java.util.UUID;
 
 @Service
 public class EventServiceImpl implements EventService{
-    private final UserRepository userRepository;
     private final EventRepository eventRepository;
+    private final CurrentUserUtils currentUserUtils;
 
-    public EventServiceImpl(UserRepository userRepository, EventRepository eventRepository){
-        this.userRepository = userRepository;
+    public EventServiceImpl(EventRepository eventRepository, CurrentUserUtils currentUserUtils){
         this.eventRepository = eventRepository;
+        this.currentUserUtils = currentUserUtils;
     }
 
     // Create Event Service
     @Override
     @Transactional
     public EventResponseDto create(AddEventDto eventData) {
-        User createdBy = userRepository.findById(eventData.getCreatedBy())
-                .orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + eventData.getCreatedBy()));
+        // Get current user from context
+        User createdBy = currentUserUtils.getCurrentUser();
 
         Event event = new Event();
         event.setEventName(eventData.getEventName());
@@ -40,14 +42,19 @@ public class EventServiceImpl implements EventService{
         event.setEndDate(eventData.getEndDate());
         event.setTag(eventData.getTag());
         event.setDestination(eventData.getDestination());
-        event.setStatus(eventData.getStatus());
+        event.setStatus(EventStatus.PLANNING);
         event.setCreatedBy(createdBy);
 
-        Event createdEvent = eventRepository.save(event);
+        Event createdEvent = eventRepository.saveAndFlush(event);
 
         EventResponseDto newEvent = new EventResponseDto();
-
         BeanUtils.copyProperties(createdEvent, newEvent);
+
+        UserDto createdByDto = new UserDto();
+        BeanUtils.copyProperties(createdBy, createdByDto);
+        createdByDto.setPassword(null);
+
+        newEvent.setCreatedBy(createdByDto);
 
         return newEvent;
     }
