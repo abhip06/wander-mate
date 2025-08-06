@@ -66,12 +66,12 @@ public class SecurityConfig {
                         // === PUBLIC ENDPOINTS ===
                         .requestMatchers(
                                 "/api/v1/auth/**",
-                                "/api/v1/events"
+                                "/api/v1/events/**"
                         ).permitAll()
 
                         // === USER ONLY ===
                         .requestMatchers(
-                                "/api/v1/events/**",
+                                
                                 "/api/v1/expenses/**",
                                 "/api/v1/users/**"
                         ).hasRole("USER")

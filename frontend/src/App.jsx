@@ -41,6 +41,8 @@ import CreateEvent from "./components/EventForm";
 import Profile from "./components/ProfileCard";
 // import Login from "./pages/Login";
 import Signup from "./components/Registration";
+import Search from "./pages/Search";
+import EventDetails from "./pages/EventDetails";
 
 const App = () => {
   return (
@@ -51,6 +53,8 @@ const App = () => {
         <Route path="/profile" element={<Profile />} />
         {/* <Route path="/login" element={<Login />} /> */}
         <Route path="/signup" element={<Signup />} />
+        <Route path="/search" element={<Search />} />
+        <Route path="/event/:id" element={<EventDetails />} />
       </Routes>
     </Router>
   );

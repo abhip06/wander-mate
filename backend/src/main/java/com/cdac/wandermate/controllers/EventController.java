@@ -7,9 +7,11 @@ import com.cdac.wandermate.services.EventService;
 import com.cdac.wandermate.utils.ApiResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -89,5 +91,13 @@ public class EventController {
         );
 
         return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+    @GetMapping("/search")
+    public ResponseEntity<List<EventResponseDto>> searchEvents(
+            @RequestParam String location,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date
+    ) {
+        List<EventResponseDto> results = eventService.searchEvents(location, date);
+        return ResponseEntity.ok(results);
     }
 }
