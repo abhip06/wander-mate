@@ -86,7 +86,7 @@ const RegisterForm = () => {
       // Gender type must match backend enum ("MALE", "FEMALE", "OTHER")
       payload.gender = payload.gender.toUpperCase();
 
-      const response = await axios.post("http://localhost:8080/api/v1/auth/register", payload);
+      const response = await axios.post("http://localhost:5000/api/v1/auth/register", payload);
       console.log("Server response:", response.data);
 
       alert("Registration successful!");
