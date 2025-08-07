@@ -39,7 +39,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import LandingPage from "./pages/LandingPage";
 import CreateEvent from "./components/EventForm";
 import Profile from "./components/ProfileCard";
-// import Login from "./pages/Login";
+import Login from "./pages/Login";
 import Signup from "./components/Registration";
 import Search from "./pages/Search";
 import EventDetails from "./pages/EventDetails";
@@ -51,7 +51,7 @@ const App = () => {
         <Route path="/" element={<LandingPage />} />
         <Route path="/create-event" element={<CreateEvent />} />
         <Route path="/profile" element={<Profile />} />
-        {/* <Route path="/login" element={<Login />} /> */}
+        <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/search" element={<Search />} />
         <Route path="/event/:id" element={<EventDetails />} />
