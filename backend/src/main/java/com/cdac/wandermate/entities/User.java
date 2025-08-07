@@ -9,6 +9,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -52,6 +53,9 @@ public class User {
     @Column(name = "role")
     @NotNull
     private RoleType role;
+    
+    @ManyToMany(mappedBy = "members")
+    private List<Event> events;
 
     @Column(name = "avatarUrl")
     private String avatarUrl;
@@ -148,7 +152,15 @@ public class User {
         this.role = role;
     }
 
-    public String getAvatarUrl() {
+    public List<Event> getEvents() {
+		return events;
+	}
+
+	public void setEvents(List<Event> events) {
+		this.events = events;
+	}
+
+	public String getAvatarUrl() {
         return avatarUrl;
     }
 

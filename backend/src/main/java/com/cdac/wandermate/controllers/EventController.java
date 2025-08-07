@@ -100,4 +100,40 @@ public class EventController {
         List<EventResponseDto> results = eventService.searchEvents(location, date);
         return ResponseEntity.ok(results);
     }
+    
+    @PostMapping("/{eventId}/add")
+    public ResponseEntity<ApiResponse<EventResponseDto>> addMemberToEvent(
+            @PathVariable UUID eventId,
+            @RequestParam UUID userId) {
+
+        EventResponseDto event = eventService.addMemberToEvent(eventId, userId);
+        
+        ApiResponse<EventResponseDto> response = new ApiResponse<>(
+                200,
+                event,
+                "Member added successfully to the event.",
+                true
+        );
+        
+        return ResponseEntity.ok(response);
+    }
+    
+    @PutMapping("/{eventId}/remove")
+    public ResponseEntity<ApiResponse<EventResponseDto>> removeMemberFromEvent(
+            @PathVariable UUID eventId,
+            @RequestParam UUID userId
+    ) {
+        eventService.removeMemberFromEvent(eventId, userId);
+        
+        ApiResponse<EventResponseDto> response = new ApiResponse<>(
+                200,
+                null,
+                "Member removed successfully from the event.",
+                true
+        );
+        
+        return ResponseEntity.ok(response);
+    }
+
+
 }

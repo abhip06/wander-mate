@@ -9,6 +9,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -48,6 +49,14 @@ public class Event {
     @NotNull
     @Column(name = "destination")
     private String destination;
+    
+    @ManyToMany
+    @JoinTable(
+        name = "event_members",
+        joinColumns = @JoinColumn(name = "event_id"),
+        inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
+    private List<User> members;
 
     @NotNull
     @Enumerated(EnumType.STRING)
@@ -137,7 +146,15 @@ public class Event {
         this.destination = destination;
     }
 
-    public EventStatus getStatus() {
+    public List<User> getMembers() {
+		return members;
+	}
+
+	public void setMembers(List<User> members) {
+		this.members = members;
+	}
+
+	public EventStatus getStatus() {
         return status;
     }
 

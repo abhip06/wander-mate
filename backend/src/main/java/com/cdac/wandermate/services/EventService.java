@@ -15,4 +15,6 @@ public interface EventService {
     List<EventResponseDto> allEvents();
     EventResponseDto info(UUID eventId);
 	List<EventResponseDto> searchEvents(String location, LocalDate date);
+	EventResponseDto addMemberToEvent(UUID eventId, UUID userId);
+	void removeMemberFromEvent(UUID eventId, UUID userId);
 }
