@@ -1,13 +1,16 @@
 import { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
   const [formData, setFormData] = useState({
-    usernameOrEmail: "",
+    email: "",
     password: ""
   });
 
   const [message, setMessage] = useState("");
+
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({
@@ -21,8 +24,17 @@ function Login() {
     setMessage("");
 
     try {
-      const response = await axios.post("http://localhost:8080/api/login", formData);
-      setMessage(response.data.message);
+      const response = await axios.post(
+        "http://localhost:5000/api/v1/auth/login",
+        formData,
+        {
+          withCredentials: true
+        }
+      );
+      if(response.status === 200){
+        navigate("/");
+        return;
+      }
     } catch (error) {
       if (error.response) {
         setMessage("❌ " + error.response.data.message);
@@ -44,11 +56,11 @@ function Login() {
             <label className="block text-sm font-semibold text-gray-700 mb-1">Username or Email</label>
             <input
               type="text"
-              name="usernameOrEmail"
-              value={formData.usernameOrEmail}
+              name="email"
+              value={formData.email}
               onChange={handleChange}
               required
-              placeholder="Enter your username or email"
+              placeholder="Enter your email"
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200 ease-in-out"
             />
           </div>

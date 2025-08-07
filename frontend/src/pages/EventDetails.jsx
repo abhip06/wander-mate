@@ -11,7 +11,11 @@ const EventDetails = () => {
     useEffect(() => {
         const fetchEvent = async () => {
             try {
-                const res = await axios.get(`http://localhost:5000/api/v1/events/${id}`);
+                const res = await axios.get(`http://localhost:5000/api/v1/events/${id}`, {
+                    headers: {
+                        Accept: "application/json"
+                    }
+                });
                 setEvent(res.data.data);
             } catch (err) {
                 setError("Unable to fetch event details.");
