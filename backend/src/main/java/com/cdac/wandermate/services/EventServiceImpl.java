@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -202,33 +203,40 @@ public class EventServiceImpl implements EventService {
 	// Search events
 	@Override
 	public List<EventResponseDto> searchEvents(String location, LocalDate date) {
-		List<Event> events = eventRepository.findByDestinationContainingIgnoreCaseAndStartDate(location, date);
-		List<EventResponseDto> dtoList = new ArrayList<>();
+	    // Convert LocalDate to start and end of the day
+	    LocalDateTime startOfDay = date.atStartOfDay();           // e.g. 2025-08-12T00:00
+	    LocalDateTime endOfDay = date.plusDays(1).atStartOfDay(); // exclusive upper bound
 
-		for (Event event : events) {
-			EventResponseDto dto = new EventResponseDto();
-			BeanUtils.copyProperties(event, dto);
+	    List<Event> events = eventRepository.findByDestinationContainingIgnoreCaseAndStartDateBetween(
+	            location, startOfDay, endOfDay
+	    );
 
-			UserDto userDto = new UserDto();
-			BeanUtils.copyProperties(event.getCreatedBy(), userDto);
-			userDto.setPassword(null);
-			dto.setCreatedBy(userDto);
+	    List<EventResponseDto> dtoList = new ArrayList<>();
 
-			// Add members
-			List<UserDto> memberDtos = event.getMembers().stream().map(member -> {
-				UserDto memberDto = new UserDto();
-				BeanUtils.copyProperties(member, memberDto);
-				memberDto.setPassword(null);
-				memberDto.setEvents(null);
-				return memberDto;
-			}).toList();
-			dto.setMembers(memberDtos);
+	    for (Event event : events) {
+	        EventResponseDto dto = new EventResponseDto();
+	        BeanUtils.copyProperties(event, dto);
 
-			dtoList.add(dto);
-		}
+	        UserDto userDto = new UserDto();
+	        BeanUtils.copyProperties(event.getCreatedBy(), userDto);
+	        userDto.setPassword(null);
+	        dto.setCreatedBy(userDto);
 
-		return dtoList;
+	        List<UserDto> memberDtos = event.getMembers().stream().map(member -> {
+	            UserDto memberDto = new UserDto();
+	            BeanUtils.copyProperties(member, memberDto);
+	            memberDto.setPassword(null);
+	            memberDto.setEvents(null);
+	            return memberDto;
+	        }).toList();
+	        dto.setMembers(memberDtos);
+
+	        dtoList.add(dto);
+	    }
+
+	    return dtoList;
 	}
+
 
 	
 	@Override
