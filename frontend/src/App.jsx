@@ -1,64 +1,45 @@
+import {
+  createBrowserRouter,
+  createRoutesFromElements,
+  Route,
+  RouterProvider,
+} from "react-router-dom";
 
-// import RegistrationForm from "./components/Registration";
-// import ProfileCard from "./components/ProfileCard";
-// import EventForm from "./components/EventForm";
-// import LandingPage from "./pages/LandingPage";  
+import Layout from "./Layout";
 
-// const mockUser = {
-//   name: "Cat Lee",
-//   location: "Pune, India",
-//   email: "cat@gmail.com",
-//   phoneNumber: "+91-9876543210",
-//   gender: "Female",
-//   dateOfBirth: "2000-01-01",
-//   interests: ["Traveling", "Hiking", "Photography"],
-//   avatar: "https://randomuser.me/api/portraits/women/90.jpg",
-// };
-
-
-// function App() {
-
-//   return (
-//     <>
-//       <div >
-//       {/* <RegistrationForm /> */}
-//      {/* <ProfileCard user={mockUser} /> */}
-//      {/* <EventForm /> */}
-//      <LandingPage />
-//     </div>
-//     </>
-//   )
-// }
-
-// export default App
-
-
-import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-
+// Pages
 import LandingPage from "./pages/LandingPage";
-import EventForm from "./components/EventForm";
-import Profile from "./components/ProfileCard";
 import Login from "./pages/Login";
 import Signup from "./components/Registration";
 import Search from "./pages/Search";
 import EventDetails from "./pages/EventDetails";
 
-const App = () => {
-  return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/create-event" element={<EventForm />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/search" element={<Search />} />
-        <Route path="/event/:id" element={<EventDetails />} />
-      </Routes>
-    </Router>
-  );
-};
+// Components
+import EventForm from "./components/EventForm";
+import Profile from "./pages/Profile";
+import About from "./pages/About";
+import Contact from "./pages/Contact";
+// import NotFound from "./pages/NotFound"; // optional fallback page
 
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <Route path="/" element={<Layout />}>
+      <Route index element={<LandingPage />} />
+      <Route path="login" element={<Login />} />
+      <Route path="signup" element={<Signup />} />
+      <Route path="create-event" element={<EventForm />} />
+      <Route path="profile" element={<Profile />} />
+      <Route path="search" element={<Search />} />
+      <Route path="event/:id" element={<EventDetails />} />
+      <Route path="about" element={<About />} />
+      <Route path="contact" element={<Contact />} />
+      {/* <Route path="*" element={<NotFound />} /> */}
+    </Route>
+  )
+);
+
+const App = () => {
+  return <RouterProvider router={router} />;
+};
 
 export default App;

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const CreateEventForm = () => {
   const [formData, setFormData] = useState({
@@ -39,17 +40,20 @@ const CreateEventForm = () => {
       );
 
       if (res.status === 200) {
-        alert("Event created successfully!");
+        toast.success("Event created successfully.");
         navigate(`/event/${res.data?.data?.id}`);
         return;
       }
 
-
-
+      if (res.status !== 500) {
+        toast.error(res.message);
+        return;
+      }
 
     } catch (err) {
-      console.error("Error creating event:", err);
-      setError("Failed to create event.");
+      // console.error("Error creating event:", err);
+      // setError("Failed to create event.");
+      toast.error("Something went wrong.");
     }
   };
 
@@ -69,11 +73,11 @@ const CreateEventForm = () => {
         <h2 className="text-4xl font-bold mb-6 text-center text-white drop-shadow">
           Create New Event
         </h2>
-        {error && (
+        {/* {error && (
           <div className="mb-4 text-red-300 font-semibold text-center">
             {error}
           </div>
-        )}
+        )} */}
 
         <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Tag Dropdown */}

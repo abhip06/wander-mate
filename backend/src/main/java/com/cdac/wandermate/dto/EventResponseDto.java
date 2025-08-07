@@ -3,7 +3,6 @@ package com.cdac.wandermate.dto;
 import com.cdac.wandermate.domains.EventStatus;
 import com.cdac.wandermate.domains.EventTags;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
