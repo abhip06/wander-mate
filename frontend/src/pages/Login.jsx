@@ -1,6 +1,9 @@
-import { useState } from "react";
-import axios from "axios";
+import { useEffect, useState } from "react";
+import axios from "../Api";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { login, logout } from "../features/authSlice";
+import { toast } from "react-toastify";
 
 function Login() {
   const [formData, setFormData] = useState({
@@ -9,8 +12,15 @@ function Login() {
   });
 
   const [message, setMessage] = useState("");
-
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const authStatus = useSelector((state) => state.auth.status);
+
+  useEffect(() => {
+    if (authStatus) {
+      navigate("/");
+    }
+  }, [authStatus, navigate]);
 
   const handleChange = (e) => {
     setFormData({
@@ -24,18 +34,21 @@ function Login() {
     setMessage("");
 
     try {
-      const response = await axios.post(
-        "http://localhost:5000/api/v1/auth/login",
-        formData,
-        {
-          withCredentials: true
-        }
-      );
-      if(response.status === 200){
+      const response = await axios.post("/api/v1/auth/login", formData, {
+        headers: { "Content-Type": "application/json" },
+        withCredentials: true,
+      });
+
+      if (response.data?.statusCode === 200) {
+        dispatch(login(response.data));
+        toast.success("Login Successfull.");
         navigate("/");
-        return;
+      } else {
+        dispatch(logout());
+        setMessage("❌ Login failed.");
       }
     } catch (error) {
+      dispatch(logout());
       if (error.response) {
         setMessage("❌ " + error.response.data.message);
       } else {
@@ -66,7 +79,7 @@ function Login() {
           </div>
 
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-1 *:">Password</label>
+            <label className="block text-sm font-semibold text-gray-700 mb-1">Password</label>
             <input
               type="password"
               name="password"

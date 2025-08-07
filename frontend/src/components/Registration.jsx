@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const RegisterForm = () => {
   const [formData, setFormData] = useState({
@@ -14,6 +16,8 @@ const RegisterForm = () => {
 
   const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState({});
+  
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -87,10 +91,12 @@ const RegisterForm = () => {
       payload.gender = payload.gender.toUpperCase();
 
       const response = await axios.post("http://localhost:5000/api/v1/auth/register", payload);
-      console.log("Server response:", response.data);
-
-      alert("Registration successful!");
-      resetForm();
+      
+      if(response.data?.statusCode === 200){
+        toast.success("Successfully Registered.");
+        navigate("/login");
+        return;
+      }
     } catch (error) {
       console.error("Registration failed:", error.response?.data || error.message);
       alert("Registration failed. Please check inputs or server.");

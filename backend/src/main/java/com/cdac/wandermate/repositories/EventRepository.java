@@ -11,4 +11,5 @@ import java.util.UUID;
 @Repository
 public interface EventRepository extends JpaRepository<Event, UUID> {
 	List<Event> findByDestinationContainingIgnoreCaseAndStartDateBetween(String destination, LocalDateTime start, LocalDateTime end);
+	List<Event> findByMembers_Id(UUID userId);
 }

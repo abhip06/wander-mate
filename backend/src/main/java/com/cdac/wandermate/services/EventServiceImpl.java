@@ -236,8 +236,6 @@ public class EventServiceImpl implements EventService {
 
 	    return dtoList;
 	}
-
-
 	
 	@Override
 	@Transactional
@@ -291,5 +289,30 @@ public class EventServiceImpl implements EventService {
 	    eventRepository.save(event);
 	}
 
+	@Override
+	public List<EventResponseDto> getEventsJoinedByUser(UUID userId) {
+	    // Step 1: Fetch all events where the user is a member
+	    List<Event> events = eventRepository.findByMembers_Id(userId); // You must define this in your repository
+
+	    List<EventResponseDto> dtoList = new ArrayList<>();
+
+	    // Step 2: Convert each Event to EventResponseDto
+	    for (Event event : events) {
+	        EventResponseDto dto = new EventResponseDto();
+	        BeanUtils.copyProperties(event, dto);
+
+	        // Set CreatedBy user (excluding password)
+	        UserDto createdByDto = new UserDto();
+	        BeanUtils.copyProperties(event.getCreatedBy(), createdByDto);
+	        createdByDto.setPassword(null);
+	        dto.setCreatedBy(createdByDto);
+
+	        dto.setMembers(null);
+
+	        dtoList.add(dto);
+	    }
+
+	    return dtoList;
+	}
 
 }

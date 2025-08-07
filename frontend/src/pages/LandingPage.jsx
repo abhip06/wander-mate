@@ -1,42 +1,34 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 const LandingPage = () => {
   const [location, setLocation] = useState("");
   const [date, setDate] = useState("");
   const navigate = useNavigate();
 
+  const authStatus = useSelector((state) => state.auth.status);
+
   const handleSearch = () => {
     if (!location || !date) return alert("Please enter location and date");
     navigate(`/search?location=${encodeURIComponent(location)}&date=${date}`);
   };
 
+  const navigateCreateEvent = () => {
+    if (!authStatus) {
+      toast.error("You are not authenticated. Please login.");
+      navigate("/login");
+      return;
+    }
+
+    navigate("/create-event");
+  }
+
   const today = new Date().toISOString().split("T")[0];
 
   return (
     <div className="min-h-screen bg-gray-100 font-sans w-full">
-
-      {/* ==================== Navbar ==================== */}
-      <nav className="w-full flex justify-between items-center py-4 px-8 bg-white shadow-md sticky top-0 z-50">
-        <div className="text-2xl font-bold text-blue-800">Wander Mate</div>
-        <ul className="hidden md:flex items-center space-x-8 text-base text-gray-700 font-medium">
-          <li><Link to="/" className="hover:text-blue-600">Home</Link></li>
-          <li><Link to="/profile" className="hover:text-blue-600">Profile</Link></li>
-          <li><a href="#" className="hover:text-blue-600">About Us</a></li>
-          <li><a href="#" className="hover:text-blue-600">Contact</a></li>
-          <li>
-            <Link to="/login">
-              <button className="bg-blue-600 text-white px-4 py-1.5 rounded-md hover:bg-blue-700">Login</button>
-            </Link>
-          </li>
-          <li>
-            <Link to="/signup">
-              <button className="bg-blue-600 text-white px-4 py-1.5 rounded-md hover:bg-blue-700">Sign Up</button>
-            </Link>
-          </li>
-        </ul>
-      </nav>
-
       {/* ==================== Main Content ==================== */}
       <main className="w-full px-0">
 
@@ -51,11 +43,13 @@ const LandingPage = () => {
             <p className="text-lg font-medium mb-6 opacity-80 max-w-xl mx-auto">
               <b>Split the cost, double the joy - travel smart with Wander Mate</b>
             </p>
-            <Link to="/create-event">
-              <button className="bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700 transition mb-8">
+            
+              <button 
+              className="bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700 transition mb-8"
+              onClick={navigateCreateEvent}
+              >
                 Create Event
               </button>
-            </Link>
 
             {/* Search Bar */}
             <div className="flex justify-center flex-wrap gap-3 max-w-2xl mx-auto mt-4">
@@ -132,11 +126,6 @@ const LandingPage = () => {
         </section>
 
       </main>
-
-      {/* ==================== Footer ==================== */}
-      <footer className="w-full bg-white shadow-inner py-6 text-center text-gray-600 border-t">
-        &copy; 2025 Wander Mate. All rights reserved.
-      </footer>
     </div>
   );
 };

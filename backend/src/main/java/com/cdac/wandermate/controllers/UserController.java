@@ -1,7 +1,9 @@
 package com.cdac.wandermate.controllers;
 
 import com.cdac.wandermate.dto.EditUserDto;
+import com.cdac.wandermate.dto.EventResponseDto;
 import com.cdac.wandermate.dto.UserDto;
+import com.cdac.wandermate.services.EventService;
 import com.cdac.wandermate.services.UserService;
 import com.cdac.wandermate.utils.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,9 @@ import java.util.UUID;
 public class UserController {
     @Autowired
     UserService userService;
+    
+    @Autowired
+    EventService eventService;
 
     @GetMapping("/{id}")
     public ResponseEntity<ApiResponse<UserDto>> getUserData(@PathVariable("id") UUID userId){
@@ -40,6 +45,20 @@ public class UserController {
                 200,
                 user,
                 "User data updated successfully.",
+                true
+        );
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+    
+    @GetMapping("/{id}/joined-events")
+    public ResponseEntity<ApiResponse<List<EventResponseDto>>> getJoinedEvents(@PathVariable("id") UUID userId){
+    	 	List<EventResponseDto> events = eventService.getEventsJoinedByUser(userId);
+
+        ApiResponse<List<EventResponseDto>> response = new ApiResponse<>(
+                200,
+                events,
+                "User data fetched successfully.",
                 true
         );
 
