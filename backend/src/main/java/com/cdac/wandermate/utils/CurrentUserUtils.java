@@ -1,6 +1,7 @@
 package com.cdac.wandermate.utils;
 
 import com.cdac.wandermate.entities.User;
+import com.cdac.wandermate.exceptions.ResourceNotFoundException;
 import com.cdac.wandermate.repositories.UserRepository;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -26,6 +27,6 @@ public class CurrentUserUtils {
     public User getCurrentUser() {
         String email = getCurrentUserEmail();
         return userRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
     }
 }

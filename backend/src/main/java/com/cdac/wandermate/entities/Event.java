@@ -35,11 +35,11 @@ public class Event {
 
     @NotNull
     @Column(name = "startDate")
-    private LocalDate startDate;
+    private LocalDateTime startDate;
 
     @NotNull
     @Column(name = "endDate")
-    private LocalDate endDate;
+    private LocalDateTime endDate;
 
     @NotNull
     @Enumerated(EnumType.STRING)
@@ -75,7 +75,7 @@ public class Event {
 
     }
 
-    public Event(String eventName, String description, User createdBy, LocalDate startDate, LocalDate endDate, EventTags tag, String destination, EventStatus status) {
+    public Event(String eventName, String description, User createdBy, LocalDateTime startDate, LocalDateTime endDate, EventTags tag, String destination, EventStatus status) {
         this.eventName = eventName;
         this.description = description;
         this.createdBy = createdBy;
@@ -114,19 +114,19 @@ public class Event {
         this.createdBy = createdBy;
     }
 
-    public LocalDate getStartDate() {
+    public LocalDateTime getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(LocalDate startDate) {
+    public void setStartDate(LocalDateTime startDate) {
         this.startDate = startDate;
     }
 
-    public LocalDate getEndDate() {
+    public LocalDateTime getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(LocalDate endDate) {
+    public void setEndDate(LocalDateTime endDate) {
         this.endDate = endDate;
     }
 

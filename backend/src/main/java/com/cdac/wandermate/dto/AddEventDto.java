@@ -1,10 +1,13 @@
 package com.cdac.wandermate.dto;
 
 import com.cdac.wandermate.domains.EventTags;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class AddEventDto {
     @NotNull(message = "Event name is required")
@@ -15,10 +18,12 @@ public class AddEventDto {
     private String description;
 
     @NotNull(message = "Start date is required")
-    private LocalDate startDate;
+    @JsonProperty("startDate")
+    private LocalDateTime startDate;
 
-    @NotNull(message = "End date is required")
-    private LocalDate endDate;
+    @NotNull(message = "Start date is required")
+    @JsonProperty("endDate")
+    private LocalDateTime endDate;
 
     @NotNull(message = "Trip tag is required")
     private EventTags tag;
@@ -30,7 +35,7 @@ public class AddEventDto {
 
     }
 
-    public AddEventDto(String eventName, String description, LocalDate startDate, LocalDate endDate, EventTags tag, String destination) {
+    public AddEventDto(String eventName, String description, LocalDateTime startDate, LocalDateTime endDate, EventTags tag, String destination) {
         this.eventName = eventName;
         this.description = description;
         this.startDate = startDate;
@@ -55,19 +60,19 @@ public class AddEventDto {
         this.description = description;
     }
 
-    public LocalDate getStartDate() {
+    public LocalDateTime getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(LocalDate startDate) {
+    public void setStartDate(LocalDateTime startDate) {
         this.startDate = startDate;
     }
 
-    public LocalDate getEndDate() {
+    public LocalDateTime getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(LocalDate endDate) {
+    public void setEndDate(LocalDateTime endDate) {
         this.endDate = endDate;
     }
 
