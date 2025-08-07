@@ -70,8 +70,7 @@ public class SecurityConfig {
                         ).permitAll()
 
                         // === USER ONLY ===
-                        .requestMatchers(
-                                
+                        .requestMatchers(                                
                                 "/api/v1/expenses/**",
                                 "/api/v1/users/**"
                         ).hasRole("USER")
