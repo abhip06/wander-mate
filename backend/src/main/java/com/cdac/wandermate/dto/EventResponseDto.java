@@ -5,6 +5,7 @@ import com.cdac.wandermate.domains.EventTags;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 public class EventResponseDto {
@@ -16,6 +17,7 @@ public class EventResponseDto {
     private LocalDate endDate;
     private EventTags tag;
     private String destination;
+	private List<UserDto> members;
     private EventStatus status;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
@@ -101,6 +103,15 @@ public class EventResponseDto {
     public void setDestination(String destination) {
         this.destination = destination;
     }
+    
+    public List<UserDto> getMembers() {
+		return members;
+	}
+
+	public void setMembers(List<UserDto> members) {
+		this.members = members;
+	}
+
 
     public EventStatus getStatus() {
         return status;
