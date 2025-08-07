@@ -4,20 +4,21 @@ import com.cdac.wandermate.domains.EventStatus;
 import com.cdac.wandermate.domains.EventTags;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class EditEventDto {
     private String eventName;
     private String description;
 //    private UserDto createdBy;
-    private LocalDate startDate;
-    private LocalDate endDate;
+    private LocalDateTime startDate;
+    private LocalDateTime endDate;
     private EventTags tag;
     private String destination;
     private EventStatus status;
 
     public EditEventDto(){}
 
-    public EditEventDto(String eventName, String description, LocalDate startDate, LocalDate endDate, EventTags tag, String destination, EventStatus status) {
+    public EditEventDto(String eventName, String description, LocalDateTime startDate, LocalDateTime endDate, EventTags tag, String destination, EventStatus status) {
         this.eventName = eventName;
         this.description = description;
         this.startDate = startDate;
@@ -43,19 +44,19 @@ public class EditEventDto {
         this.description = description;
     }
 
-    public LocalDate getStartDate() {
+    public LocalDateTime getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(LocalDate startDate) {
+    public void setStartDate(LocalDateTime startDate) {
         this.startDate = startDate;
     }
 
-    public LocalDate getEndDate() {
+    public LocalDateTime getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(LocalDate endDate) {
+    public void setEndDate(LocalDateTime endDate) {
         this.endDate = endDate;
     }
 

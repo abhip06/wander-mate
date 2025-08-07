@@ -13,8 +13,8 @@ public class EventResponseDto {
     private String eventName;
     private String description;
     private UserDto createdBy;
-    private LocalDate startDate;
-    private LocalDate endDate;
+    private LocalDateTime startDate;
+    private LocalDateTime endDate;
     private EventTags tag;
     private String destination;
 	private List<UserDto> members;
@@ -26,7 +26,7 @@ public class EventResponseDto {
 
     }
 
-    public EventResponseDto(UUID id, String eventName, String description, UserDto createdBy, LocalDate startDate, LocalDate endDate, EventTags tag, String destination, EventStatus status, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public EventResponseDto(UUID id, String eventName, String description, UserDto createdBy, LocalDateTime startDate, LocalDateTime endDate, EventTags tag, String destination, EventStatus status, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.eventName = eventName;
         this.description = description;
@@ -72,19 +72,19 @@ public class EventResponseDto {
         this.createdBy = createdBy;
     }
 
-    public LocalDate getStartDate() {
+    public LocalDateTime getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(LocalDate startDate) {
+    public void setStartDate(LocalDateTime startDate) {
         this.startDate = startDate;
     }
 
-    public LocalDate getEndDate() {
+    public LocalDateTime getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(LocalDate endDate) {
+    public void setEndDate(LocalDateTime endDate) {
         this.endDate = endDate;
     }
 

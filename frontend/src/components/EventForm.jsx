@@ -1,21 +1,22 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const CreateEventForm = () => {
   const [formData, setFormData] = useState({
     tag: "",
     eventName: "",
     description: "",
-    startDateTime: "",
-    endDateTime: "",
+    startDate: "",
+    endDate: "",
     destination: "",
-    status: "",
   });
 
   const [error, setError] = useState("");
 
-  const categories = ["Travelling", "Hangout", "Occasional"];
-  const statusOptions = ["Planned", "Ongoing", "Completed"];
+  const navigate = useNavigate();
+
+  const categories = ["TRAVELLING", "HANGOUT", "OCCASIONAL"];
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -33,24 +34,27 @@ const CreateEventForm = () => {
 
     try {
       // Replace this with actual user ID on backend (e.g., via auth token)
-      const res = await axios.post("http://localhost:8080/api/v1/events/create", {
-        ...formData,
-        createdBy: "current-user-id", // backend should extract this securely
-      });
+      const res = await axios.post("http://localhost:5000/api/v1/events/create",
+        formData,
+        {withCredentials: true}
+      );
 
-      alert("Event created successfully!");
-      console.log(res.data);
+      if(res.status === 200){
+        alert("Event created successfully!");
+        navigate(`/event/${res.data?.data?.id}`);
+        return;
+      }
+
 
       // Reset form
-      setFormData({
-        tag: "",
-        eventName: "",
-        description: "",
-        startDateTime: "",
-        endDateTime: "",
-        destination: "",
-        status: "",
-      });
+      // setFormData({
+      //   tag: "",
+      //   eventName: "",
+      //   description: "",
+      //   startDate: "",
+      //   endDate: "",
+      //   destination: "",
+      // });
     } catch (err) {
       console.error("Error creating event:", err);
       setError("Failed to create event.");
@@ -114,8 +118,8 @@ const CreateEventForm = () => {
           <label className="block font-medium mb-1">Start Date & Time</label>
           <input
             type="datetime-local"
-            name="startDateTime"
-            value={formData.startDateTime}
+            name="startDate"
+            value={formData.startDate}
             onChange={handleChange}
             required
             className="w-full px-4 py-2 border rounded-md"
@@ -127,8 +131,8 @@ const CreateEventForm = () => {
           <label className="block font-medium mb-1">End Date & Time</label>
           <input
             type="datetime-local"
-            name="endDateTime"
-            value={formData.endDateTime}
+            name="endDate"
+            value={formData.endDate}
             onChange={handleChange}
             required
             className="w-full px-4 py-2 border rounded-md"
@@ -146,25 +150,6 @@ const CreateEventForm = () => {
             required
             className="w-full px-4 py-2 border rounded-md"
           />
-        </div>
-
-        {/* Status Dropdown */}
-        <div>
-          <label className="block font-medium mb-1">Status</label>
-          <select
-            name="status"
-            value={formData.status}
-            onChange={handleChange}
-            required
-            className="w-full px-4 py-2 border rounded-md"
-          >
-            <option value="">Select Status</option>
-            {statusOptions.map((status) => (
-              <option key={status} value={status}>
-                {status}
-              </option>
-            ))}
-          </select>
         </div>
 
         {/* Submit Button */}
