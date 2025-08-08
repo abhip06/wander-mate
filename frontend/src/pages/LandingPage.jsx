@@ -34,7 +34,7 @@ const LandingPage = () => {
 
         {/* Hero Section */}
         <section
-          className="relative w-full text-center py-[350px] bg-cover bg-center"
+          className="relative w-full text-center py-[350px] bg-cover bg-center h-[700px]"
           style={{ backgroundImage: "url('/hero.jpg')" }}
         >
           <div className="absolute inset-0 bg-black bg-opacity-40"></div>

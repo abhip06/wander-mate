@@ -9,6 +9,7 @@ import java.util.UUID;
 public interface UserService {
     List<UserDto> allUsers();
     UserDto editUser(UUID userId, EditUserDto userData);
-    UserDto getUser(UUID userId);
+    UserDto getUserById(UUID userId);
     boolean delete(UUID userId);
+    UserDto getUserByToken();
 }

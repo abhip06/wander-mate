@@ -54,7 +54,6 @@ public class AuthServiceImpl implements AuthService {
 		UserDto newUser = new UserDto();
 		BeanUtils.copyProperties(createdUser, newUser);
 
-		// Remove unwanted fields
 		newUser.setPassword(null);
 
 		return newUser;
@@ -70,12 +69,12 @@ public class AuthServiceImpl implements AuthService {
 			throw new InvalidCredentialsException("Incorrect email or password.");
 		}
 
-		// Generate JWT
 		String token = jwtUtils.generateJwtToken(user.getId().toString(), user.getEmail(), user.getRole().name());
 
-		// Prepare response
 		UserDto userDto = new UserDto();
 		BeanUtils.copyProperties(user, userDto);
+		
+		userDto.setPassword(null);
 
 		return new LoginResponseDto(userDto, token);
 	}
