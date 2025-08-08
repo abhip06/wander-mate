@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import axios from "../Api";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
@@ -82,6 +82,7 @@ const RegisterForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (!validate()) return;
 
     try {
@@ -90,16 +91,16 @@ const RegisterForm = () => {
       // Gender type must match backend enum ("MALE", "FEMALE", "OTHER")
       payload.gender = payload.gender.toUpperCase();
 
-      const response = await axios.post("http://localhost:5000/api/v1/auth/register", payload);
+      const response = await axios.post("/api/v1/auth/register", payload);
       
-      if(response.data?.statusCode === 200){
+      if(response.data?.statusCode === 201){
         toast.success("Successfully Registered.");
         navigate("/login");
         return;
       }
     } catch (error) {
       console.error("Registration failed:", error.response?.data || error.message);
-      alert("Registration failed. Please check inputs or server.");
+      toast.error("Registration failed. Please check inputs or server.");
     }
   };
 

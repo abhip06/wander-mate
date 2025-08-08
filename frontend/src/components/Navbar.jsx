@@ -38,12 +38,12 @@ const Navbar = () => {
         {authStatus ? (
           <>
             <li>
-              <span className="text-gray-600 font-semibold">Hi, {userData?.name}</span>
+              <span className="text-gray-600 text-sm font-semibold">Hi, {userData?.name?.split(" ")[0]}</span>
             </li>
             <li>
               <button
                 onClick={handleLogOut}
-                className="bg-gray-500 text-white px-4 py-1.5 rounded-md hover:bg-gray-600 flex items-center gap-2"
+                className="bg-gray-800 text-white px-4 py-1.5 rounded-md hover:bg-gray-700 flex items-center gap-2"
               >
                 <FiLogOut /> Logout
               </button>

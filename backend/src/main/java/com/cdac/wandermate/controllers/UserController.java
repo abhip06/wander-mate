@@ -25,7 +25,7 @@ public class UserController {
 
     @GetMapping("/{id}")
     public ResponseEntity<ApiResponse<UserDto>> getUserData(@PathVariable("id") UUID userId){
-        UserDto user = userService.getUser(userId);
+        UserDto user = userService.getUserById(userId);
 
         ApiResponse<UserDto> response = new ApiResponse<>(
                 200,
@@ -58,6 +58,20 @@ public class UserController {
         ApiResponse<List<EventResponseDto>> response = new ApiResponse<>(
                 200,
                 events,
+                "User data fetched successfully.",
+                true
+        );
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+    
+    @GetMapping("/me")
+    public ResponseEntity<ApiResponse<UserDto>> getUserFromToken(){
+        UserDto user = userService.getUserByToken();
+
+        ApiResponse<UserDto> response = new ApiResponse<>(
+                200,
+                user,
                 "User data fetched successfully.",
                 true
         );

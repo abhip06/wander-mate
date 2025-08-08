@@ -5,6 +5,8 @@ import com.cdac.wandermate.dto.UserDto;
 import com.cdac.wandermate.entities.User;
 import com.cdac.wandermate.exceptions.ResourceNotFoundException;
 import com.cdac.wandermate.repositories.UserRepository;
+import com.cdac.wandermate.utils.CurrentUserUtils;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,8 +17,13 @@ import java.util.UUID;
 
 @Service
 public class UserServiceImpl implements UserService{
-    @Autowired
-    UserRepository userRepository;
+	private final UserRepository userRepository;
+    private final CurrentUserUtils currentUserUtils;
+    
+    public UserServiceImpl(UserRepository userRepository, CurrentUserUtils currentUserUtils) {
+    		this.userRepository = userRepository;
+    		this.currentUserUtils = currentUserUtils;
+    }
 
     @Override
     public List<UserDto> allUsers() {
@@ -40,7 +47,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public UserDto getUser(UUID userId) {
+    public UserDto getUserById(UUID userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found with ID: " + userId));
 
@@ -82,5 +89,17 @@ public class UserServiceImpl implements UserService{
         userRepository.delete(user);
 
         return true;
+    }
+    
+    @Override
+    public UserDto getUserByToken() {
+    		User currentUser = currentUserUtils.getCurrentUser();
+    		
+    		UserDto user = new UserDto();
+    		BeanUtils.copyProperties(currentUser, user);
+    		
+    		user.setPassword(null);
+    		
+    		return user;
     }
 }

@@ -130,15 +130,16 @@ const EventDetails = () => {
                             <MembersModal members={event.members} onClose={() => setShowModal(false)} />
                         )}
                     </div>
-                    <div className="flex justify-end my-4">
-                        <button
-                            className="bg-purple-600 hover:bg-purple-700 text-white text-lg font-semibold px-4 py-2 rounded-full shadow-lg transition duration-300"
-                            onClick={joinEventHandler}
-                        >
-                            Join Event
-                        </button>
-                    </div>
-
+                    {
+                        event.createdBy.id !== userData.id && <div className="flex justify-end my-4">
+                            <button
+                                className="bg-purple-600 hover:bg-purple-700 text-white text-lg font-semibold px-4 py-2 rounded-full shadow-lg transition duration-300"
+                                onClick={joinEventHandler}
+                            >
+                                Join Event
+                            </button>
+                        </div>
+                    }
                 </div>
             </div>
 
