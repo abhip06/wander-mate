@@ -7,8 +7,6 @@ import com.cdac.wandermate.dto.UserDto;
 import com.cdac.wandermate.services.AuthService;
 import com.cdac.wandermate.utils.ApiResponse;
 
-import java.util.Map;
-
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

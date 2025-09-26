@@ -14,7 +14,7 @@ public class AddEventDto {
     private String eventName;
 
     @NotNull(message = "description is required")
-    @Size(max = 255, message = "Description size not exceed 255.")
+    @Size(max = 500, message = "Description size not exceed 500.")
     private String description;
 
     @NotNull(message = "Start date is required")
