@@ -13,8 +13,6 @@ frontend/.vercel/
 frontend/.cache/
 frontend/.eslintcache
 
-backend/src/main/resources/application.properties
-!backend/src/main/resources/application.sample.properties
 backend/.metadata
 backend/target/
 backend/.classpath
